@@ -66,10 +66,10 @@ namespace Assignment_Rest.Controllers
                 if (result == null) return NotFound("The player was not found, id: " + id); 
                 return Ok(result);
             }
-            catch (Exception ex)
-                when (ex is ArgumentNullException || ex is ArgumentOutOfRangeException)
+            catch (Exception e)
+                when (e is ArgumentNullException || e is ArgumentOutOfRangeException)
             {
-                return BadRequest(ex.Message); 
+                return BadRequest(e.Message); 
             }
         }
 

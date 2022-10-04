@@ -4,7 +4,7 @@ using Assignment1_UnitTests;
 
 public class FootballPlayersManager
 {
-    private static int _nextId = 1;
+        public static int _nextId = 1;
         private static readonly List<FootballPlayer> Data = new()
         {
             new FootballPlayer {Id = _nextId++, Name = "Patrik", Age = 21, ShirtNumber = 10},

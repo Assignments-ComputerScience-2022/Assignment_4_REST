@@ -19,4 +19,10 @@
       <ProjectReference Include="..\Assignment_Rest\Assignment_Rest.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="Assignment1_UnitTests">
+        <HintPath>..\..\Assignment1_UnitTests\Assignment1_UnitTests\bin\Debug\net6.0\Assignment1_UnitTests.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>
