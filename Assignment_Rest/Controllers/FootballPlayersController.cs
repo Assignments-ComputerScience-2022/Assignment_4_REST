@@ -25,7 +25,7 @@ namespace Assignment_Rest.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public ActionResult<IEnumerable<FootballPlayer>> Get()
+        public ActionResult<IEnumerable<FootballPlayer>> GetAll()
         {
             var result = _playersManager.GetAll();
             if (result.Any()) return Ok(result);
@@ -44,6 +44,7 @@ namespace Assignment_Rest.Controllers
         }
 
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
         public ActionResult<FootballPlayer> Post([FromBody] FootballPlayer? value)
@@ -54,13 +55,22 @@ namespace Assignment_Rest.Controllers
 
 
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut("{id:int}")]
         public ActionResult<FootballPlayer> Put(int id, [FromBody] FootballPlayer value)
         {
-            FootballPlayer? result = _playersManager.Update(id, value);
-            if (result == null) return BadRequest("It is not possible to update a player with id: " + id);
-            return Ok(result);
+            try
+            {
+                FootballPlayer? result = _playersManager.Update(id, value);
+                if (result == null) return NotFound("The player was not found, id: " + id); 
+                return Ok(result);
+            }
+            catch (Exception ex)
+                when (ex is ArgumentNullException || ex is ArgumentOutOfRangeException)
+            {
+                return BadRequest(ex.Message); 
+            }
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -69,7 +79,7 @@ namespace Assignment_Rest.Controllers
         public ActionResult<FootballPlayer?> Delete(int id)
         {
             FootballPlayer? result = _playersManager.Delete(id);
-            if (result == null) return NotFound("No such Flower, id: " + id);
+            if (result == null) return NotFound("The player was not found, id: " + id);
             return Ok(result);
         }
         

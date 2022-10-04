@@ -23,6 +23,7 @@ public class FootballPlayersManager
 
         public FootballPlayer Add(FootballPlayer newPlayer)
         {
+            newPlayer.Validator();
             newPlayer.Id = _nextId++;
             Data.Add(newPlayer);
             return newPlayer;
@@ -38,6 +39,7 @@ public class FootballPlayersManager
 
         public FootballPlayer? Update(int id, FootballPlayer updates)
         {
+            updates.Validator();
             FootballPlayer? player = Data.Find(player1 => player1.Id == id);
             if (player == null) return null;
             player.Name = updates.Name;
