@@ -7,6 +7,7 @@ namespace Rest_Tests;
 public class RestTest
 {
     private FootballPlayersManager _manager;
+    private FootballPlayer player;
     
     [TestInitialize]
     public void Setup()
@@ -18,7 +19,7 @@ public class RestTest
     public void AddMethod()
     {
         //Arrange
-        FootballPlayer player = new()
+         player = new FootballPlayer()
         {
             Name = "Suarez", 
             Age = 21, 
@@ -37,7 +38,7 @@ public class RestTest
     public void GetByIdMethod()
     {
         //Arrange
-        FootballPlayer player = new()
+        player = new FootballPlayer()
         {
             Name = "Messi", 
             Age = 21, 
@@ -57,7 +58,7 @@ public class RestTest
     {
         //Arrange
         List<FootballPlayer> footballPlayers = _manager.GetAll();
-        FootballPlayer player = new()
+        player = new FootballPlayer()
         {
             Name = "Mbappe", 
             Age = 22, 
@@ -89,7 +90,7 @@ public class RestTest
     public void UpdateMethod()
     {
         //Arrange
-        FootballPlayer player = new()
+        player = new FootballPlayer()
         {
             Name = "Messi", 
             Age = 21, 
@@ -110,7 +111,7 @@ public class RestTest
     public void ValidateName()
     {
         //Arrange
-        FootballPlayer player = new FootballPlayer
+        player = new FootballPlayer()
         {
             Name = "Neymar", 
             Age = 30, 
