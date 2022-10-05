@@ -6,13 +6,24 @@ namespace Rest_Tests;
 [TestClass]
 public class RestTest
 {
-    private readonly FootballPlayersManager _manager = new();
+    private FootballPlayersManager _manager;
+    
+    [TestInitialize]
+    public void Setup()
+    {
+        _manager = new FootballPlayersManager();
+    }
 
     [TestMethod]
     public void AddMethod()
     {
         //Arrange
-        FootballPlayer player = new() { Id = FootballPlayersManager._nextId, Name = "Ben", Age = 21, ShirtNumber = 14 };
+        FootballPlayer player = new()
+        {
+            Name = "Suarez", 
+            Age = 21, 
+            ShirtNumber = 14
+        };
 
         //Act
         _manager.Add(player);
@@ -27,10 +38,14 @@ public class RestTest
     {
         //Arrange
         FootballPlayer player = new()
-            { Id = FootballPlayersManager._nextId, Name = "Messi", Age = 21, ShirtNumber = 30 };
-        _manager.Add(player);
-
+        {
+            Name = "Messi", 
+            Age = 21, 
+            ShirtNumber = 30
+        };
+        
         //Act
+        _manager.Add(player);
         FootballPlayer? player1 = _manager.GetById(player.Id);
 
         //Assert
@@ -40,8 +55,19 @@ public class RestTest
     [TestMethod]
     public void GetAllMethodTest()
     {
+        //Arrange
         List<FootballPlayer> footballPlayers = _manager.GetAll();
-        _manager.Add(new FootballPlayer() { Id = FootballPlayersManager._nextId, Name = "Messi", Age = 21, ShirtNumber = 30 });
+        FootballPlayer player = new()
+        {
+            Name = "Mbappe", 
+            Age = 22, 
+            ShirtNumber = 10
+        };
+        
+        //Act
+        _manager.Add(player);
+        
+        //Assert
         Assert.AreNotEqual(footballPlayers.Count, _manager.GetAll().Count);
         Assert.AreEqual(footballPlayers.Count + 1, _manager.GetAll().Count);
     }
@@ -50,16 +76,13 @@ public class RestTest
     public void DeleteMethod()
     {
         //Arrange
-        FootballPlayer player = new()
-            { Id = FootballPlayersManager._nextId, Name = "Messi", Age = 21, ShirtNumber = 30 };
-        _manager.Add(player);
-
+        int initialCount = _manager.GetAll().Count;
         //Act
-        _manager.Delete(player.Id);
+        _manager.Delete(1);
 
         //Assert
-        Assert.AreEqual(7, _manager.GetAll().Count);
-        Assert.AreEqual(null, _manager.GetById(player.Id));
+        Assert.AreEqual(initialCount - 1, _manager.GetAll().Count);
+        Assert.IsNull(_manager.GetById(1));
     }
 
     [TestMethod]
@@ -67,12 +90,16 @@ public class RestTest
     {
         //Arrange
         FootballPlayer player = new()
-            { Id = FootballPlayersManager._nextId, Name = "Messi", Age = 21, ShirtNumber = 30 };
-        _manager.Add(player);
+        {
+            Name = "Messi", 
+            Age = 21, 
+            ShirtNumber = 30
+        };
         
         //Act
+        _manager.Add(player);
         player.Name = "Ronaldo";
-        _manager.Update(7, player);
+        _manager.Update(5, player);
 
         //Assert
         Assert.AreEqual(player.Name, _manager.GetById(player.Id)?.Name);
@@ -83,14 +110,18 @@ public class RestTest
     public void ValidateName()
     {
         //Arrange
-        FootballPlayer player = new FootballPlayer{ Id = 1, Name = "Messi", Age = 30, ShirtNumber = 10 };
+        FootballPlayer player = new FootballPlayer
+        {
+            Name = "Neymar", 
+            Age = 30, 
+            ShirtNumber = 10
+        };
 
         //Act
-        player.Name = "M";
-        _manager.Update(8, player);
+        player.Name = "N";
+        _manager.Update(player.Id, player);
         
         //Assert
         Assert.ThrowsException<ArgumentOutOfRangeException>(() => player.ValidateName());
     }
 }
-
