@@ -7,10 +7,10 @@ public class FootballPlayersManager
         public static int _nextId = 1;
         private static readonly List<FootballPlayer> Data = new()
         {
-            new FootballPlayer {Id = _nextId++, Name = "Patrik", Age = 21, ShirtNumber = 10},
-            new FootballPlayer {Id = _nextId++, Name = "Adam", Age = 30, ShirtNumber = 11},
-            new FootballPlayer {Id = _nextId++, Name = "Martin", Age = 16, ShirtNumber = 7},
-            new FootballPlayer {Id = _nextId++, Name = "Thomas", Age = 18, ShirtNumber = 14}
+            new FootballPlayer {Id = _nextId++, Name = "Messi", Age = 21, ShirtNumber = 10},
+            new FootballPlayer {Id = _nextId++, Name = "Ronaldo", Age = 30, ShirtNumber = 11},
+            new FootballPlayer {Id = _nextId++, Name = "Skriniar", Age = 16, ShirtNumber = 7},
+            new FootballPlayer {Id = _nextId++, Name = "Salah", Age = 18, ShirtNumber = 14}
         };
 
         public List<FootballPlayer> GetAll()
